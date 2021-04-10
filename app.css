@@ -1,0 +1,35 @@
+body {
+    width: 750px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+}
+.container {
+    display: flex;
+    max-width: 750px;
+    min-width: 550px;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid black;
+}
+
+#computerSelects {
+    margin-left: 150px;
+}
+
+button {
+    transition: all .7s ease;
+}
+.selected {
+    transform: scale(1.1); 
+    background-color: cyan;
+}
+
+.results-container {
+    margin: auto;
+
+}
+
+.results-container h3 {
+    text-align: center;
+}
