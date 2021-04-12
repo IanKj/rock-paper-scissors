@@ -7,35 +7,79 @@ body {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    background-color: #264653;
+    color: #e9c46a;
 }
 .container {
     display: flex;
     min-width: 550px;
-    justify-content: center;
+    width: 75vw;
+    justify-content: space-evenly;
     flex-wrap: wrap;
-    border: 1px solid red;
-
 }
 
-#computerSelects {
-    margin-left: 150px;
+.container div {
+    text-align: center;
 }
-
 button {
-    transition: all .7s ease;
+    display: inline-block;
+    border: none;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    margin: 0;
+    text-decoration: none;
+    transition: all .7s ease-in-out;
+    background-color: #e76f51;
+    color: #264653;
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+#winnerMessage h2 {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+#winnerMessage button {
+    display: inline-block;
+    border: none;
+    padding: .5rem .5rem;
+    margin: 0;
+    text-decoration: none;
+    transition: all .7s ease-in-out;
+    background-color: #e76f51;
+    color: #264653;
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select {
+    background-color: #e76f51;
 }
 .selected {
     transform: scale(1.1); 
-    background-color: cyan;
+    background-color: #2a9d8f;
 }
 
+#empty-container {
+    position: relative;
+    width: 100%;
+    height: 120px;
+}
 .results-container {
     width: 100%;
-    height: 110px;
+    height: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid green;
+    position: absolute;
 }
 
 .results-container h3 {
@@ -43,10 +87,30 @@ button {
 }
 
 .gameControls {
+    margin-top: 20px;
     width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    border: 1px solid blue;
+}
+
+#winnerMessage {
+    position: absolute;
+    margin-top: 20px;
+    width: 100%;
+    height: 120px;
+    text-align: center;
+    font-size: 1.5em;
+    background-color: #2a9d8f;
+    transition: all 1s;
+    border-radius: 10px;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.show {
+    opacity: 1;
 }

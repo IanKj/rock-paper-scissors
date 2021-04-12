@@ -2,17 +2,30 @@ const summary = document.createElement('p');
 const resultsContainer = document.querySelector('.results-container');
 const playerButtons = document.querySelectorAll("#playerSelects button");
 const winner = document.createElement('h3');
+const playerScore = document.querySelector('#playerScore span')
+const computerScore = document.querySelector('#computerScore span')
+const hiddenContainer = document.querySelector('#winnerMessage')
+const hiddenMessage = document.querySelector('#winnerMessage h2')
 
-playerButtons.forEach(button => button.addEventListener('click', e => {
-    let wpn = button.innerText.toLowerCase();
-    button.classList.add('selected');
-    summary.innerText = ''
-    playRound(wpn);
-}))
+let playerScoreCount = 0;
+let computerScoreCount = 0;
+const playTo = document.querySelector('select');
+let playingTo = parseInt(playTo.value);
 
-//returns computer pick at random - rock paper or scissor 
+playTo.addEventListener('change', (e) => {
+    playingTo = parseInt(playTo.value);
+    playerScoreCount = 0;
+    computerScoreCount = 0;
+    computerScore.innerText = computerScoreCount;
+    playerScore.innerText = playerScoreCount;
+    hiddenContainer.classList.add('hidden');
+    resultsContainer.classList.remove('hidden');
+    buttonsOff(false)
+    summary.innerText = '';
+    winner.innerText = '';
+})
+
 function computerPicks() {
-
     let ranNum = Math.floor((Math.random() * 3) + 1);
     let computerSelection;
     if (ranNum === 1) {
@@ -31,15 +44,16 @@ function computerPicks() {
     return computerSelection.toLowerCase();
 }
 
-//play 1 round of RPS, list selections
 function playRound(wpn) {
     let computerSelection = computerPicks();
     let playerSelection = wpn;
     summary.innerText = `You selected ${playerSelection}, the computer selected ${computerSelection}`
     resultsContainer.append(summary);
     winner.innerText = 'You win'
+    let playerWins = true;
     if (computerSelection === playerSelection) {
         winner.innerText = `Tie game, you both selected ${playerSelection}!`
+        playerWins = undefined;
 
     } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
 
@@ -49,37 +63,61 @@ function playRound(wpn) {
 
     } else {
         winner.innerText = 'You lose!'
+        playerWins = false;
     }
     resultsContainer.append(winner);
+    return playerWins
 }
 
-//play a game of x rounds
-function game(rounds) {
-    let playerScore = 0;
-    let computerScore = 0;
-    for (let i = 1; i < (rounds + 1); i++) {
-        console.log(`Round ${i}:`)
-        let playerWins = playRound();
-        if (playerWins === undefined) {
-            i--;
-        } else if (playerWins === true) {
-            playerScore++;
-        } else {
-            computerScore++;
+playerButtons.forEach(button => button.addEventListener('click', e => {
+    let wpn = button.innerText.toLowerCase();
+    button.classList.add('selected');
+    summary.innerText = ''
+    let roundWinner = playRound(wpn);
+    if (roundWinner === true) {
+
+        playerScoreCount++;
+        playerScore.innerText = playerScoreCount;
+        if (checkForWin(playerScoreCount)) {
+            hiddenMessage.innerText = 'You won the match!';
+            hideWinningBanner(true);
+            buttonsOff(true);
+        }
+    } else if (roundWinner === false) {
+        computerScoreCount++;
+        computerScore.innerText = computerScoreCount;
+        if (checkForWin(computerScoreCount)) {
+            hiddenMessage.innerText = 'You lost the match!';
+            hideWinningBanner(true);
+            buttonsOff(true);
         }
     }
-
-    let playerWins = playerScore > computerScore;
-    if (playerScore === computerScore) {
-        console.log(`Darn, tie game \n player: ${playerScore} \n computer: ${computerScore}`)
-    } else {
-        console.log(`Final results: You ${playerWins === true ? 'won' : 'lost'}! \n player: ${playerScore} \n computer: ${computerScore} `);
-    }
-}
+}))
 
 function removeTransition(e) {
     if (e.propertyName !== 'transform') return
     this.classList.remove('selected')
+}
+
+function checkForWin(score) {
+    if (score === playingTo) {
+        return true
+    }
+}
+
+const buttonsOff = function (boolean) {
+    for (let button of playerButtons) {
+        if (boolean === true) {
+            button.disabled = true;
+        } else button.disabled = false;
+    }
+}
+
+function hideWinningBanner(boolean) {
+    if (boolean === true) {
+        resultsContainer.classList.add('hidden');
+        hiddenContainer.classList.remove('hidden')
+    }
 }
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('transitionend', removeTransition));
