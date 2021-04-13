@@ -6,6 +6,9 @@ const playerScore = document.querySelector('#playerScore span')
 const computerScore = document.querySelector('#computerScore span')
 const hiddenContainer = document.querySelector('#winnerMessage')
 const hiddenMessage = document.querySelector('#winnerMessage h2')
+const playAgainBtn = document.querySelector('#playAgainBtn')
+const playerAndCompbtns = document.querySelectorAll('#playerSelects button, #computerSelects button')
+
 
 let playerScoreCount = 0;
 let computerScoreCount = 0;
@@ -80,7 +83,7 @@ playerButtons.forEach(button => button.addEventListener('click', e => {
         playerScore.innerText = playerScoreCount;
         if (checkForWin(playerScoreCount)) {
             hiddenMessage.innerText = 'You won the match!';
-            hideWinningBanner(true);
+            showWinningBanner(true);
             buttonsOff(true);
         }
     } else if (roundWinner === false) {
@@ -88,12 +91,19 @@ playerButtons.forEach(button => button.addEventListener('click', e => {
         computerScore.innerText = computerScoreCount;
         if (checkForWin(computerScoreCount)) {
             hiddenMessage.innerText = 'You lost the match!';
-            hideWinningBanner(true);
+            showWinningBanner(true);
             buttonsOff(true);
         }
     }
 }))
 
+playAgainBtn.addEventListener('click', e => {
+    playerScoreCount = 0;
+    computerScoreCount = 0;
+    buttonsOff(false);
+    showWinningBanner(false);
+
+})
 function removeTransition(e) {
     if (e.propertyName !== 'transform') return
     this.classList.remove('selected')
@@ -106,17 +116,26 @@ function checkForWin(score) {
 }
 
 const buttonsOff = function (boolean) {
-    for (let button of playerButtons) {
+    for (let button of playerAndCompbtns) {
         if (boolean === true) {
             button.disabled = true;
-        } else button.disabled = false;
+            button.classList.add('deactivated');
+        } else {
+            button.disabled = false;
+            button.classList.remove('deactivated');
+        }
     }
 }
 
-function hideWinningBanner(boolean) {
+function showWinningBanner(boolean) {
     if (boolean === true) {
         resultsContainer.classList.add('hidden');
         hiddenContainer.classList.remove('hidden')
+    } else {
+        resultsContainer.classList.remove('hidden');
+        hiddenContainer.classList.add('hidden')
+        summary.innerText = '';
+        winner.innerText = '';
     }
 }
 const buttons = document.querySelectorAll('button');

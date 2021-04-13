@@ -62,6 +62,11 @@ button {
 
 select {
     background-color: #e76f51;
+    border-radius: 5px;
+}
+
+option {
+    border-radius: 10px;
 }
 .selected {
     transform: scale(1.1); 
@@ -69,6 +74,7 @@ select {
 }
 
 #empty-container {
+    margin-top: 20px;
     position: relative;
     width: 100%;
     height: 120px;
@@ -87,17 +93,21 @@ select {
 }
 
 .gameControls {
-    margin-top: 20px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    height: 125px;
     flex-direction: column;
     align-items: center;
 }
 
+.gameControls p {
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
 #winnerMessage {
     position: absolute;
-    margin-top: 20px;
     width: 100%;
     height: 120px;
     text-align: center;
@@ -114,3 +124,9 @@ select {
 .show {
     opacity: 1;
 }
+
+.deactivated {
+    background-color: #b7b7a4;
+    cursor: default;
+}
+
