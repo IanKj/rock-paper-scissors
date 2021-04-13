@@ -1,3 +1,7 @@
+:root {
+    --btn-color: #e76f51;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -29,7 +33,7 @@ button {
     margin: 0;
     text-decoration: none;
     transition: all .7s ease-in-out;
-    background-color: #e76f51;
+    background-color: var(--btn-color);
     color: #264653;
     font-family: sans-serif;
     font-size: 1rem;
@@ -60,9 +64,13 @@ button {
     -moz-appearance: none;
 }
 
+.hover:hover {
+    box-shadow: 0px 0px 4px #e9c46a;;
+}
+
 select {
     background-color: #e76f51;
-    border-radius: 5px;
+    
 }
 
 option {
@@ -121,12 +129,8 @@ option {
     opacity: 0;
 }
 
-.show {
-    opacity: 1;
-}
-
 .deactivated {
-    background-color: #b7b7a4;
+    background-color: #6b705c;
     cursor: default;
 }
 

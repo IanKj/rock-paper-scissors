@@ -8,7 +8,7 @@ const hiddenContainer = document.querySelector('#winnerMessage')
 const hiddenMessage = document.querySelector('#winnerMessage h2')
 const playAgainBtn = document.querySelector('#playAgainBtn')
 const playerAndCompbtns = document.querySelectorAll('#playerSelects button, #computerSelects button')
-
+const compBtns = document.querySelectorAll('#computerSelects button');
 
 let playerScoreCount = 0;
 let computerScoreCount = 0;
@@ -17,10 +17,7 @@ let playingTo = parseInt(playTo.value);
 
 playTo.addEventListener('change', (e) => {
     playingTo = parseInt(playTo.value);
-    playerScoreCount = 0;
-    computerScoreCount = 0;
-    computerScore.innerText = computerScoreCount;
-    playerScore.innerText = playerScoreCount;
+    newGame();
     hiddenContainer.classList.add('hidden');
     resultsContainer.classList.remove('hidden');
     buttonsOff(false)
@@ -97,9 +94,15 @@ playerButtons.forEach(button => button.addEventListener('click', e => {
     }
 }))
 
-playAgainBtn.addEventListener('click', e => {
+function newGame() {
     playerScoreCount = 0;
     computerScoreCount = 0;
+    computerScore.innerText = computerScoreCount;
+    playerScore.innerText = playerScoreCount;
+}
+
+playAgainBtn.addEventListener('click', e => {
+    newGame();
     buttonsOff(false);
     showWinningBanner(false);
 
@@ -120,6 +123,7 @@ const buttonsOff = function (boolean) {
         if (boolean === true) {
             button.disabled = true;
             button.classList.add('deactivated');
+            button.classList.remove('hover');
         } else {
             button.disabled = false;
             button.classList.remove('deactivated');
@@ -140,3 +144,7 @@ function showWinningBanner(boolean) {
 }
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('transitionend', removeTransition));
+compBtns.forEach(button => {
+    button.disabled = true;
+    button.style.cursor = 'default';
+})
